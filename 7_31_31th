@@ -1,0 +1,37 @@
+class Solution {
+//1.将list中的数字直接排列组合所有可能放入数组
+//2.将数组排序，读到第几个数字为原来的数字，输出下一个
+//很好，这个方法被solution认为是not acceptable at all；我可以按照他的开始思考降序最大这一思路
+//1.将这个数字从i-1开始判断是否降序，迭代当false时，将此时第n个变为比原第n个大的第一个数再升序排列剩下的数
+//很好，思路对了开始写；考虑写成多个方法比较方便传参：1.降序判断；2.找到第二个数（并交换）；3.升序排列剩下的数
+public void nextPermutation(int[] nums) {
+    int pivot;
+    for(pivot=nums.length-1; pivot>0; pivot--)
+        if(nums[pivot] > nums[pivot-1]) break;
+    if(pivot != 0)swap(nums, pivot-1);
+    inverse(nums, pivot);
+    return;
+}
+
+private void swap(int[] nums, int piv){
+    int j = nums.length-1;
+    while(j > piv)
+        if(nums[j--] > nums[piv]){
+            int tmp = nums[piv]; 
+            nums[piv] = nums[++j]; 
+            nums[j] = tmp; break; 
+        }
+    return;
+}
+
+private void inverse(int[] nums, int piv){
+    int i = piv, j = nums.length-1;
+    while(i < j){
+        int tmp = nums[i];
+        nums[i++] = nums[j];
+        nums[j--] = tmp;
+    }
+    return;
+}
+
+}
